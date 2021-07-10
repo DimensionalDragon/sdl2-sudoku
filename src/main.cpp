@@ -9,9 +9,6 @@
 #include "Entity.hpp"
 #include "Util/Vector2f.hpp"
 
-#define RANDOM_ZERO_TO_ONE 0.5 * (SDL_sinf(rand()) + 1)
-#define NUMBER_OF_PARTICLES 250
-
 int main(int argc, char *argv[])
 {
     //SDL Init
@@ -19,7 +16,7 @@ int main(int argc, char *argv[])
     if(!IMG_Init(IMG_INIT_PNG)) std::cout << "[ERROR] Failed Image Init: " << SDL_GetError() << std::endl;
     
     //Window and loading textures
-    RenderWindow window("Particle Collision Sim v1.0", 1280, 720);
+    RenderWindow window("Sudoku", 480, 720);
 
     std::vector<SDL_Texture*> entityTextures;
 
