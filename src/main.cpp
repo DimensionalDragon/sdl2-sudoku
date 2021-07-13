@@ -126,10 +126,20 @@ int main(int argc, char *argv[])
         {
             if(mouse.isInsideSquare(s))
             {
-                s.setColor(165, 165, 165, 255);
+                if(s.getColor()[0] != 147 && s.getColor()[0] != 112)
+                    s.setColor(165, 165, 165, 255);
                 for(Square* r : s.getRelatives())
                 {
-                    r->setColor(200, 200, 200, 255);
+                    if(r->getColor()[0] != 147 && r->getColor()[0] != 112)
+                        r->setColor(200, 200, 200, 255);
+                }
+            }
+            if(s.isSelected())
+            {
+                s.setColor(112, 163, 214, 255);
+                for(Square* r : s.getRelatives())
+                {
+                    r->setColor(147, 198, 249, 255);
                 }
             }
             s.setTexture(numberTextures[s.getValue()]);
