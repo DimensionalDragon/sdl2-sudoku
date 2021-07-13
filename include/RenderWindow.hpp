@@ -3,6 +3,7 @@
 #include<SDL2/SDL_image.h>
 
 #include "Entity.hpp"
+#include "Square.hpp"
 
 class RenderWindow
 {
@@ -12,9 +13,12 @@ public:
     int getRefreshRate();
     int getWidth();
     int getHeight();
+    void updateSize();
     void clean();
     void clearScreen();
+    void renderBox(Vector2f position, float width, float height);
     void render(Entity& entity);
+    void render(Square& square);
     void display();
     
 private:

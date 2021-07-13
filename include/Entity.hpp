@@ -13,6 +13,9 @@ class Entity
         SDL_Rect getCurrentFrame();
         float getWidth();
         float getHeight();
+        void setPosition(float pX, float pY);
+        void setWidth(float pWidth);
+        void setHeight(float pHeight);
     protected:
         Vector2f position;
         SDL_Rect currentFrame;

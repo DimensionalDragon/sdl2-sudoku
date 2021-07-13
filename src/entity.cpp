@@ -40,3 +40,19 @@ float Entity::getHeight()
 {
     return height;
 }
+
+void Entity::setPosition(float pX, float pY)
+{
+    position.x = pX;
+    position.y = pY;
+}
+
+void Entity::setWidth(float pWidth)
+{
+    width = pWidth;
+}
+
+void Entity::setHeight(float pHeight)
+{
+    height = pHeight;
+}
