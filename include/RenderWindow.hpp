@@ -4,6 +4,7 @@
 
 #include "Entity.hpp"
 #include "Square.hpp"
+#include "Board.hpp"
 
 class RenderWindow
 {
@@ -19,6 +20,7 @@ public:
     void renderBox(Vector2f position, float width, float height);
     void render(Entity& entity);
     void render(Square& square);
+    void render(Board& board);
     void display();
     
 private:

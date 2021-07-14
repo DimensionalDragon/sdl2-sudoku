@@ -9,6 +9,7 @@
 class Square : public Entity
 {
 public:
+    Square();
     Square(Vector2f pPos, int pRow, int pColumn, SDL_Texture* pTexture);
     void generateRelatives(std::vector<Square>& squares);
     void select();

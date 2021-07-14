@@ -4,6 +4,10 @@
 #include "Util/Vector2f.hpp"
 #include "Square.hpp"
 
+Square::Square()
+    : Entity(Vector2f(0, 0), 0, 0, nullptr)
+{}
+
 Square::Square(Vector2f pPos, int pRow, int pColumn, SDL_Texture* pTexture)
     : Entity(pPos, 40, 40, pTexture)
 {

@@ -5,6 +5,7 @@
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 #include "Square.hpp"
+#include "Board.hpp"
 
 RenderWindow::RenderWindow(const char* title, int width, int height)
     :window(NULL), renderer(NULL)
@@ -109,6 +110,21 @@ void RenderWindow::render(Square& square)
     SDL_RenderDrawRect(renderer, &dest);
     SDL_RenderCopy(renderer, square.getTexture(), &src, &dest);
     SDL_SetRenderDrawColor(renderer, 230, 230, 230, 255);
+}
+
+void RenderWindow::render(Board& board)
+{
+    for(Square& s : board.getSquares())
+    {
+        render(s);
+    }
+    for(int i = 0; i < 3; i++)
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            renderBox(Vector2f(board.getStartPoint().x + j * 3 * board.getSquareSize(), board.getStartPoint().y + i * 3 * board.getSquareSize()), 3 * board.getSquareSize(), 3 * board.getSquareSize());
+        }
+    }
 }
 
 void RenderWindow::display()

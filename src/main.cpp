@@ -8,6 +8,7 @@
 #include "RenderWindow.hpp"
 #include "Mouse.hpp"
 #include "Entity.hpp"
+#include "Board.hpp"
 #include "Square.hpp"
 #include "Util/Vector2f.hpp"
 
@@ -42,20 +43,8 @@ int main(int argc, char *argv[])
     numberTextures.push_back(window.loadTexture("res/images/number8.png"));
     numberTextures.push_back(window.loadTexture("res/images/number9.png"));
 
-    //Square/tile container
-    std::vector<Square> squares;
-    for(int i = 0; i < 9; i++)
-    {
-        for(int j = 0; j < 9; j++)
-        {
-            squares.push_back(Square(Vector2f(BOARD_START_X + j * SQUARE_SIZE, BOARD_START_Y + i * SQUARE_SIZE), i, j, numberTextures[0]));
-        }
-    }
-
-    for(int g = 0; g < 81; g++)
-    {
-        squares[g].generateRelatives(squares);
-    }
+    //Board
+    Board board(Vector2f(BOARD_START_X, BOARD_START_Y), numberTextures[0]);
 
     //Program starts
     bool isRunning = true;
@@ -83,31 +72,14 @@ int main(int argc, char *argv[])
                         window.updateSize();
                         background.setWidth(WINDOW_WIDTH);
                         background.setHeight(WINDOW_HEIGHT);
-                        for(int i = 0; i < 9; i++)
-                        {
-                            for(int j = 0; j < 9; j++)
-                            {
-                                squares[9 * i + j].setSize(SQUARE_SIZE);
-                                squares[9 * i + j].setPosition(BOARD_START_X + j * SQUARE_SIZE, BOARD_START_Y + i * SQUARE_SIZE);
-                            }
-                        }
+                        board.resize(SQUARE_SIZE);
                     }
                     break;
 
                 case SDL_MOUSEBUTTONDOWN:
                     if(event.button.button == SDL_BUTTON_LEFT)
                     {
-                        for(Square& s : squares)
-                        {
-                            if(mouse.isInsideSquare(s))
-                            {
-                                for(Square& other : squares)
-                                {
-                                    other.deselect();
-                                }
-                                s.select();
-                            }
-                        }
+                        board.select(mouse);
                     }
                     break;
 
@@ -120,44 +92,10 @@ int main(int argc, char *argv[])
 
         window.render(background);
 
-        std::for_each(squares.begin(), squares.end(), [](Square& in) { in.setColor(255, 255, 255, 255); });
+        board.setAllSquareColor(255, 255, 255, 255);
+        board.update(mouse);
 
-        for(Square& s : squares) //Logic
-        {
-            if(mouse.isInsideSquare(s))
-            {
-                if(s.getColor()[0] != 147 && s.getColor()[0] != 112)
-                    s.setColor(165, 165, 165, 255);
-                for(Square* r : s.getRelatives())
-                {
-                    if(r->getColor()[0] != 147 && r->getColor()[0] != 112)
-                        r->setColor(200, 200, 200, 255);
-                }
-            }
-            if(s.isSelected())
-            {
-                s.setColor(112, 163, 214, 255);
-                for(Square* r : s.getRelatives())
-                {
-                    r->setColor(147, 198, 249, 255);
-                }
-            }
-            s.setTexture(numberTextures[s.getValue()]);
-        }
-
-        for(Square& s : squares) //Render
-        {
-            window.render(s);
-        }
-
-        for(int i = 0; i < 3; i++)
-        {
-            for(int j = 0; j < 3; j++)
-            {
-                window.renderBox(Vector2f(BOARD_START_X + j * 3 * SQUARE_SIZE, BOARD_START_Y + i * 3 * SQUARE_SIZE), 3 * SQUARE_SIZE, 3 * SQUARE_SIZE);
-            }
-        }
-
+        window.render(board);
         window.display();
 
         //Timestep management
