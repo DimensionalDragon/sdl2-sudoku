@@ -42,9 +42,10 @@ int main(int argc, char *argv[])
     numberTextures.push_back(window.loadTexture("res/images/number7.png"));
     numberTextures.push_back(window.loadTexture("res/images/number8.png"));
     numberTextures.push_back(window.loadTexture("res/images/number9.png"));
+    numberTextures.push_back(window.loadTexture("res/images/pencil.png"));
 
     //Board
-    Board board(Vector2f(BOARD_START_X, BOARD_START_Y), numberTextures[0]);
+    Board board(Vector2f(BOARD_START_X, BOARD_START_Y), numberTextures);
 
     //Program starts
     bool isRunning = true;
@@ -72,7 +73,7 @@ int main(int argc, char *argv[])
                         window.updateSize();
                         background.setWidth(WINDOW_WIDTH);
                         background.setHeight(WINDOW_HEIGHT);
-                        board.resize(SQUARE_SIZE);
+                        board.resize(Vector2f(BOARD_START_X, BOARD_START_Y), SQUARE_SIZE);
                     }
                     break;
 
@@ -81,6 +82,10 @@ int main(int argc, char *argv[])
                     {
                         board.select(mouse);
                     }
+                    break;
+
+                case SDL_KEYDOWN:
+                    board.setSelectedSquareValue(event.key.keysym.sym);
                     break;
 
                 default:

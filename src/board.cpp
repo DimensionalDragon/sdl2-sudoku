@@ -6,16 +6,17 @@
 #include "Square.hpp"
 #include "Board.hpp"
 
-Board::Board(Vector2f pStartPoint, SDL_Texture* pTexture)
+Board::Board(Vector2f pStartPoint, std::vector<SDL_Texture*>& pSquareTextures)
 {
     startPoint = pStartPoint;
     squareSize = 40;
     squares.resize(81);
+    squareTextures.assign(pSquareTextures.begin(), pSquareTextures.end());
     for(int i = 0; i < 9; i++)
     {
         for(int j = 0; j < 9; j++)
         {
-            squares[9 * i + j] = Square(Vector2f(startPoint + Vector2f(j * squareSize, i * squareSize)), i, j, pTexture);
+            squares[9 * i + j] = Square(Vector2f(startPoint + Vector2f(j * squareSize, i * squareSize)), i, j, squareTextures[0]);
         }
     }
     for(Square& s : squares)
@@ -24,8 +25,9 @@ Board::Board(Vector2f pStartPoint, SDL_Texture* pTexture)
     }
 }
 
-void Board::resize(float newSize)
+void Board::resize(Vector2f pStartPoint, float newSize)
 {
+    startPoint = pStartPoint;
     squareSize = newSize;
     for(int i = 0; i < 9; i++)
     {
@@ -74,7 +76,7 @@ void Board::update(Mouse& mouse)
                 r->setColor(147, 198, 249, 255);
             }
         }
-        //s.setTexture(numberTextures[s.getValue()]);
+        s.setTexture(squareTextures[s.getValue()]);
     }
 }
 
@@ -98,5 +100,16 @@ void Board::setAllSquareColor(int r, int g, int b, int a)
     for(Square& s : squares)
     {
         s.setColor(r, g, b, a);
+    }
+}
+
+void Board::setSelectedSquareValue(char key)
+{
+    if(key == '\b' || (key >= '1' && key <= '9'))
+    {
+        for(Square& s : squares)
+        {
+            if(s.isSelected()) s.writePen((key == '\b') ? 0 : key - '0');
+        }
     }
 }
