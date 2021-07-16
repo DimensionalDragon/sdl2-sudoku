@@ -10,7 +10,7 @@ class Square : public Entity
 {
 public:
     Square();
-    Square(Vector2f pPos, int pRow, int pColumn, SDL_Texture* pTexture);
+    Square(Vector2f pPos, int pRow, int pColumn, int pValue, int pCorrectValue, SDL_Texture* pTexture);
     void generateRelatives(std::vector<Square>& squares);
     void select();
     void deselect();
@@ -28,7 +28,7 @@ public:
     void writePen(int pValue);
     void writePencil(int pValue);
 private:
-    int value;
+    int value, correctValue;
     int row, column, groupRow, groupColumn;
     bool selected;
     std::array<int, 4> color;

@@ -8,14 +8,15 @@ Square::Square()
     : Entity(Vector2f(0, 0), 0, 0, nullptr)
 {}
 
-Square::Square(Vector2f pPos, int pRow, int pColumn, SDL_Texture* pTexture)
+Square::Square(Vector2f pPos, int pRow, int pColumn, int pValue, int pCorrectValue, SDL_Texture* pTexture)
     : Entity(pPos, 40, 40, pTexture)
 {
     row = pRow;
     groupRow = row / 3;
     column = pColumn;
     groupColumn = column / 3;
-    value = 0;
+    value = pValue;
+    correctValue = pCorrectValue;
     selected = false;
     color.fill(255);
     pencil.fill(false);

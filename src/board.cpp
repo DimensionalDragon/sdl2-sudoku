@@ -1,4 +1,6 @@
 #include<iostream>
+#include<fstream>
+#include<sstream>
 #include<vector>
 
 #include "Util/Vector2f.hpp"
@@ -8,6 +10,14 @@
 
 Board::Board(Vector2f pStartPoint, std::vector<SDL_Texture*>& pSquareTextures)
 {
+    const std::vector<std::string> chosenProblem = generateProblem();
+    for(int i = 0; i < 81; i++)
+    {
+        std::cout << chosenProblem[1].at(i);
+        if(i % 3 == 2) std::cout << " ";
+        if(i % 9 == 8) std::cout << std::endl;
+        if(i % 27 == 26) std::cout << std::endl;
+    }
     startPoint = pStartPoint;
     squareSize = 40;
     squares.resize(81);
@@ -16,13 +26,33 @@ Board::Board(Vector2f pStartPoint, std::vector<SDL_Texture*>& pSquareTextures)
     {
         for(int j = 0; j < 9; j++)
         {
-            squares[9 * i + j] = Square(Vector2f(startPoint + Vector2f(j * squareSize, i * squareSize)), i, j, squareTextures[0]);
+            squares[9 * i + j] = Square(Vector2f(startPoint + Vector2f(j * squareSize, i * squareSize)), i, j, chosenProblem[0].at(9 * i + j) - '0', chosenProblem[1].at(9 * i + j) - '0', squareTextures[chosenProblem[0].at(9 * i + j) - '0']);
         }
     }
     for(Square& s : squares)
     {
         s.generateRelatives(squares);
     }
+}
+
+std::vector<std::string> Board::generateProblem()
+{
+    const int random = (rand() % 1000) + 1;
+    std::string chosenLine;
+    std::vector<std::string> chosenProblem;
+    std::ifstream problemData("res/dev/sudoku.csv");
+    for(int i = 1; std::getline(problemData, chosenLine); i++)
+    {
+        if(i == random) break;
+    }
+    std::stringstream chosenLineSS(chosenLine);
+    while(chosenLineSS.good())
+    {
+        std::string temp;
+        std::getline(chosenLineSS, temp, ',');
+        chosenProblem.push_back(temp);
+    }
+    return chosenProblem;
 }
 
 void Board::resize(Vector2f pStartPoint, float newSize)
@@ -41,6 +71,7 @@ void Board::resize(Vector2f pStartPoint, float newSize)
 
 void Board::select(Mouse& mouse)
 {
+    bool noSquareSelected = true;
     for(Square& s : squares)
     {
         if(mouse.isInsideSquare(s))
@@ -50,6 +81,14 @@ void Board::select(Mouse& mouse)
                 other.deselect();
             }
             s.select();
+            noSquareSelected = false;
+        }
+    }
+    if(noSquareSelected)
+    {
+        for(Square& s : squares)
+        {
+            s.deselect();
         }
     }
 }

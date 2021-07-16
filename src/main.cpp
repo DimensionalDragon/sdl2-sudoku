@@ -4,6 +4,7 @@
 #include<utility>
 #include<algorithm>
 #include<vector>
+#include<ctime>
 
 #include "RenderWindow.hpp"
 #include "Mouse.hpp"
@@ -24,6 +25,9 @@ int main(int argc, char *argv[])
     if(SDL_Init(SDL_INIT_EVERYTHING) > 0) std::cout << "[ERROR] Failed Init: " << SDL_GetError() << std::endl;
     if(!IMG_Init(IMG_INIT_PNG)) std::cout << "[ERROR] Failed Image Init: " << SDL_GetError() << std::endl;
     
+    //Random seed
+    srand(time(NULL));
+
     //Window, background, and textures
     RenderWindow window("Sudoku", 480, 720);
 

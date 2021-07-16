@@ -23,4 +23,5 @@ private:
     std::vector<Square> squares;
     Vector2f startPoint;
     float squareSize;
+    std::vector<std::string> generateProblem();
 };
