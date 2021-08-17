@@ -20,7 +20,7 @@ public:
     int getGroupRow();
     int getGroupColumn();
     std::array<int, 4>& getColor();
-    std::array<Square*, 20> getRelatives();
+    std::vector<Square*> getRelatives();
     bool isSelected();
     void setTexture(SDL_Texture* pTexture);
     void setSize(float pSize);
@@ -33,5 +33,5 @@ private:
     bool selected;
     std::array<int, 4> color;
     std::array<bool, 9> pencil;
-    std::array<Square*, 20> relatives;
+    std::vector<Square*> relatives;
 };

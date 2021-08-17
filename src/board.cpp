@@ -45,13 +45,8 @@ std::vector<std::string> Board::generateProblem()
     {
         if(i == random) break;
     }
-    std::stringstream chosenLineSS(chosenLine);
-    while(chosenLineSS.good())
-    {
-        std::string temp;
-        std::getline(chosenLineSS, temp, ',');
-        chosenProblem.push_back(temp);
-    }
+    chosenProblem.push_back(chosenLine.substr(0, 81));
+    chosenProblem.push_back(chosenLine.substr(82));
     return chosenProblem;
 }
 

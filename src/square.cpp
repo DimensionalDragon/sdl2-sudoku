@@ -20,12 +20,10 @@ Square::Square(Vector2f pPos, int pRow, int pColumn, int pValue, int pCorrectVal
     selected = false;
     color.fill(255);
     pencil.fill(false);
-    relatives.fill(nullptr);
 }
 
 void Square::generateRelatives(std::vector<Square>& squares)
 {
-    int counter = 0;
     for(int i = 0; i < 9; i++)
     {
         for(int j = 0; j < 9; j++)
@@ -34,15 +32,21 @@ void Square::generateRelatives(std::vector<Square>& squares)
             {
                 if(i == row || j == column)
                 {
-                    relatives[counter] = &squares[9 * i + j];
-                    counter++;
+                    relatives.push_back(&squares[9 * i + j]);
                 }
                 else if(squares[9 * i + j].getGroupRow() == groupRow && squares[9 * i + j].getGroupColumn() == groupColumn)
                 {
-                    relatives[counter] = &squares[9 * i + j];
-                    counter++;
+                    relatives.push_back(&squares[9 * i + j]);
                 }
             }
+        }
+    }
+    for(int k = 0; k < 81; k++)
+    {
+        if(value != 0 && squares[k].getValue() == value)
+        {
+            //TODO : remove squares that are already in relatives
+            relatives.push_back(&squares[k]);
         }
     }
 }
@@ -87,7 +91,7 @@ std::array<int, 4>& Square::getColor()
     return color;
 }
 
-std::array<Square*, 20> Square::getRelatives()
+std::vector<Square*> Square::getRelatives()
 {
     return relatives;
 }
