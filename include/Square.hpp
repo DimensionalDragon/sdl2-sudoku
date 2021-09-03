@@ -12,8 +12,14 @@ public:
     Square();
     Square(Vector2f pPos, int pRow, int pColumn, int pValue, int pCorrectValue, SDL_Texture* pTexture);
     void generateRelatives(std::vector<Square>& squares);
+    void update();
+    bool isAnswerFalse();
+    bool isRedTexture();
+    bool getAnswerStatus();
     void select();
     void deselect();
+    void setCorrect();
+    void unCorrect();
     int getValue();
     int getRow();
     int getColumn();
@@ -30,7 +36,7 @@ public:
 private:
     int value, correctValue;
     int row, column, groupRow, groupColumn;
-    bool selected;
+    bool selected, correct;
     std::array<int, 4> color;
     std::array<bool, 9> pencil;
     std::vector<Square*> relatives;

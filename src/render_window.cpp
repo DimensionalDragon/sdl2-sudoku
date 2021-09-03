@@ -1,6 +1,8 @@
 #include<SDL2/SDL.h>
 #include<SDL2/SDL_image.h>
 #include<iostream>
+#include<fstream>
+#include<string>
 
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
@@ -23,6 +25,16 @@ SDL_Texture* RenderWindow::loadTexture(const char* filePath)
     texture = IMG_LoadTexture(renderer, filePath);
     if(texture == NULL) std::cout << "[ERROR] Texture Load Failed: " << SDL_GetError() << std::endl;
     return texture;
+}
+
+void RenderWindow::loadTextures(const char* filePath, std::vector<SDL_Texture*>& o_list)
+{
+    std::ifstream list(filePath);
+    std::string currentTexture;
+    while(std::getline(list, currentTexture))
+    {
+        o_list.push_back(loadTexture(currentTexture.c_str()));
+    }
 }
 
 int RenderWindow::getRefreshRate()

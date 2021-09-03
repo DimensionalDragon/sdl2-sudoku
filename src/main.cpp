@@ -35,18 +35,7 @@ int main(int argc, char *argv[])
     Entity background(Vector2f(0, 0), window.getWidth(), window.getHeight(), backgroundTexture);
 
     std::vector<SDL_Texture*> numberTextures;
-
-    numberTextures.push_back(window.loadTexture("res/images/blank.png"));
-    numberTextures.push_back(window.loadTexture("res/images/number1.png"));
-    numberTextures.push_back(window.loadTexture("res/images/number2.png"));
-    numberTextures.push_back(window.loadTexture("res/images/number3.png"));
-    numberTextures.push_back(window.loadTexture("res/images/number4.png"));
-    numberTextures.push_back(window.loadTexture("res/images/number5.png"));
-    numberTextures.push_back(window.loadTexture("res/images/number6.png"));
-    numberTextures.push_back(window.loadTexture("res/images/number7.png"));
-    numberTextures.push_back(window.loadTexture("res/images/number8.png"));
-    numberTextures.push_back(window.loadTexture("res/images/number9.png"));
-    numberTextures.push_back(window.loadTexture("res/images/pencil.png"));
+    window.loadTextures("res/dev/texture_list.txt", numberTextures);
 
     //Board
     Board board(Vector2f(BOARD_START_X, BOARD_START_Y), numberTextures);
@@ -84,7 +73,7 @@ int main(int argc, char *argv[])
                 case SDL_MOUSEBUTTONDOWN:
                     if(event.button.button == SDL_BUTTON_LEFT)
                     {
-                        board.select(mouse);
+                        board.updateSelected(mouse);
                     }
                     break;
 

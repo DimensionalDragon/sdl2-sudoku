@@ -1,12 +1,15 @@
 #include<iostream>
 #include<fstream>
-#include<sstream>
+#include<algorithm>
 #include<vector>
 
 #include "Util/Vector2f.hpp"
 #include "Mouse.hpp"
 #include "Square.hpp"
 #include "Board.hpp"
+
+#define CORRECT_TEXTURE(x) squareTextures[x.getValue()]
+#define WRONG_TEXTURE(x) squareTextures[x.getValue() + 9]
 
 Board::Board(Vector2f pStartPoint, std::vector<SDL_Texture*>& pSquareTextures)
 {
@@ -64,7 +67,7 @@ void Board::resize(Vector2f pStartPoint, float newSize)
     }
 }
 
-void Board::select(Mouse& mouse)
+void Board::updateSelected(Mouse& mouse)
 {
     bool noSquareSelected = true;
     for(Square& s : squares)
@@ -92,6 +95,7 @@ void Board::update(Mouse& mouse)
 {
     for(Square& s : squares)
     {
+        //when mouse is inside a square (cell)
         if(mouse.isInsideSquare(s))
         {
             if(s.getColor()[0] != 147 && s.getColor()[0] != 112)
@@ -102,6 +106,8 @@ void Board::update(Mouse& mouse)
                     r->setColor(200, 200, 200, 255);
             }
         }
+
+        // when a cell is selected
         if(s.isSelected())
         {
             s.setColor(112, 163, 214, 255);
@@ -110,7 +116,9 @@ void Board::update(Mouse& mouse)
                 r->setColor(147, 198, 249, 255);
             }
         }
-        s.setTexture(squareTextures[s.getValue()]);
+
+        //when a cell has wrong answer
+        s.setTexture(!s.isRedTexture() ? CORRECT_TEXTURE(s) : WRONG_TEXTURE(s));
     }
 }
 

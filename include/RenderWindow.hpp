@@ -1,6 +1,7 @@
 #pragma once
 #include<SDL2/SDL.h>
 #include<SDL2/SDL_image.h>
+#include<vector>
 
 #include "Entity.hpp"
 #include "Square.hpp"
@@ -10,7 +11,8 @@ class RenderWindow
 {
 public:
     RenderWindow(const char* title, int width, int height);
-    SDL_Texture* loadTexture(const char* filePath);
+    SDL_Texture* loadTexture(const char* filePath); //image file
+    void loadTextures(const char* filePath, std::vector<SDL_Texture*>& o_list); //text file containing strings of image files
     int getRefreshRate();
     int getWidth();
     int getHeight();
