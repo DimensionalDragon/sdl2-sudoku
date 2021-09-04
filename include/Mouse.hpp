@@ -13,7 +13,7 @@ public:
     int getX();
     int getY();
     Vector2f getPos();
-    bool isInsideSquare(Square& square);
+    bool isInsideEntity(Entity& entity);
 private:
     int x, y;
 };

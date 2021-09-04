@@ -20,7 +20,6 @@ Square::Square(Vector2f pPos, int pRow, int pColumn, int pValue, int pCorrectVal
     selected = false;
     color.fill(255);
     pencil.fill(false);
-    correct = true;
 }
 
 void Square::generateRelatives(std::vector<Square>& squares)
@@ -52,6 +51,12 @@ void Square::generateRelatives(std::vector<Square>& squares)
     }
 }
 
+void Square::updateAnswer(int pValue, int pCorrectValue)
+{
+    value = pValue;
+    correctValue = pCorrectValue;
+}
+
 bool Square::isAnswerFalse()
 {
     return (value != 0) && (value != correctValue);
@@ -67,11 +72,6 @@ bool Square::isRedTexture()
     return (value != 0) && (isAnswerFalse() || isRelativeFalse);
 }
 
-bool Square::getAnswerStatus()
-{
-    return correct;
-}
-
 void Square::select()
 {
     selected = true;
@@ -80,16 +80,6 @@ void Square::select()
 void Square::deselect()
 {
     selected = false;
-}
-
-void Square::setCorrect()
-{
-    correct = true;
-}
-
-void Square::unCorrect()
-{
-    correct = false;
 }
 
 int Square::getValue()

@@ -21,6 +21,7 @@ Board::Board(Vector2f pStartPoint, std::vector<SDL_Texture*>& pSquareTextures)
         if(i % 9 == 8) std::cout << std::endl;
         if(i % 27 == 26) std::cout << std::endl;
     }
+    std::cout << "=================================" << std::endl;
     startPoint = pStartPoint;
     squareSize = 40;
     squares.resize(81);
@@ -67,12 +68,33 @@ void Board::resize(Vector2f pStartPoint, float newSize)
     }
 }
 
+void Board::restart()
+{
+    const std::vector<std::string> chosenProblem = generateProblem();
+    for(int i = 0; i < 81; i++)
+    {
+        std::cout << chosenProblem[1].at(i);
+        if(i % 3 == 2) std::cout << " ";
+        if(i % 9 == 8) std::cout << std::endl;
+        if(i % 27 == 26) std::cout << std::endl;
+    }
+    std::cout << "=================================" << std::endl;
+    for(int i = 0; i < 9; i++)
+    {
+        for(int j = 0; j < 9; j++)
+        {
+            squares[9 * i + j].updateAnswer(chosenProblem[0].at(9 * i + j) - '0', chosenProblem[1].at(9 * i + j) - '0');
+            squares[9 * i + j].setTexture(squareTextures[chosenProblem[0].at(9 * i + j) - '0']);
+        }
+    }
+}
+
 void Board::updateSelected(Mouse& mouse)
 {
     bool noSquareSelected = true;
     for(Square& s : squares)
     {
-        if(mouse.isInsideSquare(s))
+        if(mouse.isInsideEntity(s))
         {
             for(Square& other : squares)
             {
@@ -96,7 +118,7 @@ void Board::update(Mouse& mouse)
     for(Square& s : squares)
     {
         //when mouse is inside a square (cell)
-        if(mouse.isInsideSquare(s))
+        if(mouse.isInsideEntity(s))
         {
             if(s.getColor()[0] != 147 && s.getColor()[0] != 112)
                 s.setColor(165, 165, 165, 255);

@@ -11,6 +11,7 @@ class Board
 public:
     Board(Vector2f pStartPoint, std::vector<SDL_Texture*>& pSquareTextures);
     void resize(Vector2f pStartPoint, float newSize);
+    void restart();
     void updateSelected(Mouse& mouse);
     void update(Mouse& mouse);
     Vector2f& getStartPoint();

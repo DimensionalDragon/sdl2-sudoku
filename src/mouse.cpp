@@ -23,10 +23,10 @@ Vector2f Mouse::getPos()
     return Vector2f(x, y);
 }
 
-bool Mouse::isInsideSquare(Square& square)
+bool Mouse::isInsideEntity(Entity& entity)
 {
     Vector2f currentPos = getPos();
     return
-    (currentPos.x >= square.getPosition().x && currentPos.x <= square.getPosition().x + square.getWidth()
-    && currentPos.y >= square.getPosition().y && currentPos.y <= square.getPosition().y + square.getHeight());
+    (currentPos.x >= entity.getPosition().x && currentPos.x <= entity.getPosition().x + entity.getWidth()
+    && currentPos.y >= entity.getPosition().y && currentPos.y <= entity.getPosition().y + entity.getHeight());
 }
