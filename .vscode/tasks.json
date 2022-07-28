@@ -5,18 +5,18 @@
     "tasks": [
         {
             "type": "shell",
-			"label": "Compile SDL2 Debug",
-			"command": "C:\\mingw64\\bin\\g++.exe",
-			"args": [
+            "label": "Compile SDL2 Debug",
+            "command": "C:\\mingw64\\bin\\g++.exe",
+            "args": [
                 "-I${workspaceFolder}\\include",
-                "-I${workspaceFolder}\\include\\SDL2-windows-x64\\include",
-				"-c",
-				"${workspaceFolder}\\src\\*.cpp",
+                "-I${workspaceFolder}\\include\\vendor\\SDL2-windows-x64\\include",
+                "-c",
+                "${workspaceFolder}\\src\\*.cpp",
                 "-std=c++17",
                 "-g",
                 "-Wall",
                 "-m64"
-			]
+            ]
         },
         {
             "type": "shell",
@@ -27,7 +27,7 @@
                 "-o",
                 "${workspaceFolder}\\bin\\debug\\main.exe",
                 "-L",
-                "D:\\SDL2-windows-x64\\lib",
+                "${workspaceFolder}\\include\\vendor\\SDL2-windows-x64\\lib",
                 "-lmingw32",
                 "-lSDL2main",
                 "-lSDL2",
@@ -37,28 +37,34 @@
         },
         {
             "type": "shell",
+            "label": "Clean SDL2 Debug",
+            "command": "del *.o",
+            "dependsOn": "Build SDL2 Debug"
+        },
+        {
+            "type": "shell",
             "label": "Run SDL2 Debug",
             "command": ".\\bin\\debug\\main.exe",
-            "dependsOn": "Build SDL2 Debug",
+            "dependsOn": "Clean SDL2 Debug",
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
-        },
+        }
         // {
         //     "type": "shell",
-		// 	"label": "Compile SDL2 Release",
-		// 	"command": "C:\\mingw64\\bin\\g++.exe",
-		// 	"args": [
+        // 	"label": "Compile SDL2 Release",
+        // 	"command": "C:\\mingw64\\bin\\g++.exe",
+        // 	"args": [
         //         "-I${workspaceFolder}\\include",
         //         "-I${workspaceFolder}\\include\\SDL2-windows-x64\\include",
-		// 		"-c",
-		// 		"${workspaceFolder}\\src\\*.cpp",
+        // 		"-c",
+        // 		"${workspaceFolder}\\src\\*.cpp",
         //         "-std=c++17",
         //         "-O3",
         //         "-Wall",
         //         "-m64"
-		// 	]
+        // 	]
         // },
         // {
         //     "type": "shell",

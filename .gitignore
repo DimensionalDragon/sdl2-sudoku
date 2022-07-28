@@ -1,4 +1,4 @@
-*.o
 .vscode
+out
 bin
 include/vendor

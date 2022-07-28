@@ -143,3 +143,8 @@ void RenderWindow::display()
 {
     SDL_RenderPresent(renderer);
 }
+
+void RenderWindow::showMessageBox(const char* message)
+{
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Sudoku", message, window);
+}

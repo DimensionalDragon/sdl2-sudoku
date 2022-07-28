@@ -24,6 +24,7 @@ public:
     void render(Square& square);
     void render(Board& board);
     void display();
+    void showMessageBox(const char* message);
     
 private:
     SDL_Window* window;
