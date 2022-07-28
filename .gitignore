@@ -1,4 +1,8 @@
 .vscode
-out
 bin
 include/vendor
+
+# TODO: Use makefile to build the package
+Makefile
+make
+out

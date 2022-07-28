@@ -117,26 +117,26 @@ void Board::update(Mouse& mouse)
 {
     for(Square& s : squares)
     {
-        //when mouse is inside a square (cell)
+        // when mouse is inside a square (cell)
         if(mouse.isInsideEntity(s))
         {
-            if(s.getColor()[0] != 147 && s.getColor()[0] != 112)
-                s.setColor(165, 165, 165, 255);
             for(Square* r : s.getRelatives())
             {
                 if(r->getColor()[0] != 147 && r->getColor()[0] != 112)
-                    r->setColor(200, 200, 200, 255);
+                    r->setColor(200, 200, 200, 255); // Light gray
             }
+            if(s.getColor()[0] != 147 && s.getColor()[0] != 112) // s not light blue and not dark blue
+                s.setColor(165, 165, 165, 255); // Dark gray
         }
 
         // when a cell is selected
         if(s.isSelected())
         {
-            s.setColor(112, 163, 214, 255);
             for(Square* r : s.getRelatives())
             {
-                r->setColor(147, 198, 249, 255);
+                r->setColor(147, 198, 249, 255); // Light blue
             }
+            s.setColor(112, 163, 214, 255); // Dark blue
         }
 
         //when a cell has wrong answer
